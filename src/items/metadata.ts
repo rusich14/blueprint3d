@@ -10,6 +10,9 @@ module BP3D.Items {
     /** Url of the model. */
     modelUrl?: string;
 
+    /** Code of the model. */
+    modelCode?: string;
+
     /** Resizeable or not */
     resizable?: boolean;
   }

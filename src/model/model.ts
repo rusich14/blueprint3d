@@ -41,6 +41,8 @@ module BP3D.Model {
       this.roomLoadingCallbacks.fire();
 
       var data = JSON.parse(json)
+
+      console.log('=====> parse data: ', data);
       this.newRoom(
         data.floorplan,
         data.items
@@ -58,6 +60,7 @@ module BP3D.Model {
           item_name: object.metadata.itemName,
           item_type: object.metadata.itemType,
           model_url: object.metadata.modelUrl,
+          model_code: object.metadata.modelCode,
           xpos: object.position.x,
           ypos: object.position.y,
           zpos: object.position.z,
@@ -87,7 +90,8 @@ module BP3D.Model {
           itemName: item.item_name,
           resizable: item.resizable,
           itemType: item.item_type,
-          modelUrl: item.model_url
+          modelUrl: item.model_url,
+          modelCode: item.model_code
         };
         var scale = new THREE.Vector3(
           item.scale_x,

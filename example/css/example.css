@@ -104,6 +104,13 @@ div {
   padding: 0;  
 }
 
+#api-controls {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 0;
+}
+
 #camera-controls {
   position: absolute;
   bottom: 20px;
