@@ -40,7 +40,7 @@ module BP3D.Model {
 
       // init item loader
       this.loader = new THREE.JSONLoader();
-      this.loader.crossOrigin = "";
+      this.loader.crossOrigin = '';
     }
 
     /** Adds a non-item, basically a mesh, to the scene.
@@ -76,17 +76,17 @@ module BP3D.Model {
      * @returns The count.
      */
     public itemCount(): number {
-      return this.items.length
+      return this.items.length;
     }
 
     /** Removes all items. */
     public clearItems() {
-      var items_copy = this.items
+      var items_copy = this.items;
       var scope = this;
       this.items.forEach((item) => {
         scope.removeItem(item, true);
       });
-      this.items = []
+      this.items = [];
     }
 
     /**
@@ -130,13 +130,13 @@ module BP3D.Model {
         scope.add(item);
         item.initObject();
         scope.itemLoadedCallbacks.fire(item);
-      }
+      };
 
       this.itemLoadingCallbacks.fire();
       this.loader.load(
         fileName,
         loaderCallback,
-        undefined // TODO_Ekki 
+        undefined // TODO_Ekki
       );
     }
   }

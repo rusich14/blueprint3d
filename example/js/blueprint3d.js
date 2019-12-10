@@ -2319,6 +2319,112 @@ var BP3D;
 })(BP3D || (BP3D = {}));
 /// <reference path="../../lib/three.d.ts" />
 /// <reference path="../model/model.ts" />
+/// <reference path="item.ts" />
+/// <reference path="metadata.ts" />
+var BP3D;
+(function (BP3D) {
+    var Items;
+    (function (Items) {
+        /**
+         * A Floor Item is an entity to be placed related to a floor.
+         */
+        var DeviceItem = (function (_super) {
+            __extends(DeviceItem, _super);
+            function DeviceItem(model, metadata, geometry, material, position, rotation, scale) {
+                _super.call(this, model, metadata, geometry, material, position, rotation, scale);
+                // console.log('=====> DeviceItem');
+            }
+            ;
+            /** */
+            DeviceItem.prototype.placeInRoom = function () {
+                if (!this.position_set) {
+                    var center = this.model.floorplan.getCenter();
+                    this.position.x = center.x;
+                    this.position.z = center.z;
+                    this.position.y = 0.5 * (this.geometry.boundingBox.max.y - this.geometry.boundingBox.min.y);
+                }
+            };
+            ;
+            /** Take action after a resize */
+            DeviceItem.prototype.resized = function () {
+            };
+            /** */
+            DeviceItem.prototype.moveToPosition = function (vec3, intersection) {
+                // keeps the position in the room and on the floor
+                if (!this.isValidPosition(vec3)) {
+                    this.showError(vec3);
+                    return;
+                }
+                else {
+                    this.hideError();
+                    vec3.y = this.position.y; // keep it on the floor!
+                    this.position.copy(vec3);
+                }
+            };
+            /** */
+            DeviceItem.prototype.isValidPosition = function (vec3) {
+                var corners = this.getCorners('x', 'z', vec3);
+                // check if we are in a room
+                var rooms = this.model.floorplan.getRooms();
+                var isInARoom = false;
+                for (var i = 0; i < rooms.length; i++) {
+                    if (BP3D.Core.Utils.pointInPolygon(vec3.x, vec3.z, rooms[i].interiorCorners) &&
+                        !BP3D.Core.Utils.polygonPolygonIntersect(corners, rooms[i].interiorCorners)) {
+                        isInARoom = true;
+                    }
+                }
+                if (!isInARoom) {
+                    //console.log('object not in a room');
+                    return false;
+                }
+                // check if we are in a space
+                this.spaceCheck();
+                return true;
+            };
+            DeviceItem.prototype.spaceCheck = function () {
+                var items = this.model.scene.getItems();
+                this.position.y = 0.5 * (this.geometry.boundingBox.max.y - this.geometry.boundingBox.min.y);
+                for (var i = 0; i < items.length; i++) {
+                    if (this.uuid !== items[i].uuid) {
+                        var positions = {
+                            selected: {
+                                x: {
+                                    start: this.position.x - this.halfSize.x,
+                                    end: this.position.x + this.halfSize.x
+                                },
+                                z: {
+                                    start: this.position.z + this.halfSize.z,
+                                    end: this.position.z - this.halfSize.z
+                                }
+                            },
+                            other: {
+                                x: {
+                                    start: items[i].position.x - items[i].halfSize.x,
+                                    end: items[i].position.x + items[i].halfSize.x
+                                },
+                                z: {
+                                    start: items[i].position.z + items[i].halfSize.z,
+                                    end: items[i].position.z - items[i].halfSize.z
+                                }
+                            }
+                        };
+                        var itemInterval = {
+                            from: (positions.selected.x.start < positions.other.x.end && positions.selected.x.end > positions.other.x.start),
+                            to: (positions.selected.z.start > positions.other.z.end && positions.selected.z.end < positions.other.z.start)
+                        };
+                        if (itemInterval.from && itemInterval.to) {
+                            this.position.y = items[i].position.y + items[i].getHeight();
+                        }
+                    }
+                }
+            };
+            return DeviceItem;
+        })(Items.Item);
+        Items.DeviceItem = DeviceItem;
+    })(Items = BP3D.Items || (BP3D.Items = {}));
+})(BP3D || (BP3D = {}));
+/// <reference path="../../lib/three.d.ts" />
+/// <reference path="../model/model.ts" />
 /// <reference path="floor_item.ts" />
 /// <reference path="metadata.ts" />
 var BP3D;
@@ -2363,6 +2469,7 @@ var BP3D;
 /// <reference path="floor_item.ts" />
 /// <reference path="in_wall_floor_item.ts" />
 /// <reference path="in_wall_item.ts" />
+/// <reference path="device_item.ts" />
 /// <reference path="on_floor_item.ts" />
 /// <reference path="wall_floor_item.ts" />
 /// <reference path="wall_item.ts" />
@@ -2375,6 +2482,7 @@ var BP3D;
             1: Items.FloorItem,
             2: Items.WallItem,
             3: Items.InWallItem,
+            4: Items.DeviceItem,
             7: Items.InWallFloorItem,
             8: Items.OnFloorItem,
             9: Items.WallFloorItem
@@ -2425,7 +2533,7 @@ var BP3D;
                 this.scene = new THREE.Scene();
                 // init item loader
                 this.loader = new THREE.JSONLoader();
-                this.loader.crossOrigin = "";
+                this.loader.crossOrigin = '';
             }
             /** Adds a non-item, basically a mesh, to the scene.
              * @param mesh The mesh to be added.
@@ -2504,7 +2612,7 @@ var BP3D;
                     scope.itemLoadedCallbacks.fire(item);
                 };
                 this.itemLoadingCallbacks.fire();
-                this.loader.load(fileName, loaderCallback, undefined // TODO_Ekki 
+                this.loader.load(fileName, loaderCallback, undefined // TODO_Ekki
                 );
             };
             return Scene;
@@ -2544,7 +2652,6 @@ var BP3D;
                 // TODO: a much better serialization format.
                 this.roomLoadingCallbacks.fire();
                 var data = JSON.parse(json);
-                console.log('=====> parse data: ', data);
                 this.newRoom(data.floorplan, data.items);
                 this.roomLoadedCallbacks.fire();
             };

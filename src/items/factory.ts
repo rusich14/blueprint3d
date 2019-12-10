@@ -1,6 +1,7 @@
 /// <reference path="floor_item.ts" />
 /// <reference path="in_wall_floor_item.ts" />
 /// <reference path="in_wall_item.ts" />
+/// <reference path="device_item.ts" />
 /// <reference path="on_floor_item.ts" />
 /// <reference path="wall_floor_item.ts" />
 /// <reference path="wall_item.ts" />
@@ -11,6 +12,7 @@ module BP3D.Items {
     1: Items.FloorItem,
     2: Items.WallItem,
     3: Items.InWallItem,
+    4: Items.DeviceItem,
     7: Items.InWallFloorItem,
     8: Items.OnFloorItem,
     9: Items.WallFloorItem
@@ -19,8 +21,8 @@ module BP3D.Items {
   /** Factory class to create items. */
   export class Factory {
     /** Gets the class for the specified item. */
-    public static getClass(itemType) { 
-      return item_types[itemType]
+    public static getClass(itemType) {
+      return item_types[itemType];
     }
   }
 }
