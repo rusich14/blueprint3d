@@ -7,7 +7,7 @@ module.exports = function (grunt) {
     sources: ["src/*.ts", "src/*/*.ts"],
     outDir: "dist",
     docDir: "doc",
-    exampleDir: "example/js/"
+    exampleDir: "room-configurator/js/"
   };
 
   var configuration = {
@@ -72,7 +72,7 @@ module.exports = function (grunt) {
     "typescript:" + globalConfig.moduleName
   ]);
 
-  grunt.registerTask("example", [
+  grunt.registerTask("room-configurator", [
     "copy:threejs",
     "copy:" + globalConfig.moduleName
   ]);
@@ -86,6 +86,6 @@ module.exports = function (grunt) {
 
   grunt.registerTask("default", [
     "debug",
-    "example"
+    "room-configurator"
   ]);
 };

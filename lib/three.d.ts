@@ -405,7 +405,7 @@ declare module THREE {
     /**
      * Camera with orthographic projection
      *
-     * @example
+     * @room-configurator
      * var camera = new THREE.OrthographicCamera( width / - 2, width / 2, height / 2, height / - 2, 1, 1000 );
      * scene.add( camera );
      *
@@ -466,7 +466,7 @@ declare module THREE {
     /**
      * Camera with perspective projection.
      *
-     * # example
+     * # room-configurator
      *     var camera = new THREE.PerspectiveCamera( 45, width / height, 1, 1000 );
      *     scene.add( camera );
      *
@@ -513,7 +513,7 @@ declare module THREE {
 
         /**
          * Sets an offset in a larger frustum. This is useful for multi-window or multi-monitor/multi-machine setups.
-         * For example, if you have 3x2 monitors and each monitor is 1920x1080 and the monitors are in grid like this:
+         * For room-configurator, if you have 3x2 monitors and each monitor is 1920x1080 and the monitors are in grid like this:
          *
          *     +---+---+---+
          *     | A | B | C |
@@ -1704,7 +1704,7 @@ declare module THREE {
     /**
      * This light's color gets applied to all the objects in the scene globally.
      *
-     * # example
+     * # room-configurator
      *     var light = new THREE.AmbientLight( 0x404040 ); // soft white light
      *     scene.add( light );
      *
@@ -1724,7 +1724,7 @@ declare module THREE {
     /**
      * Affects objects using MeshLambertMaterial or MeshPhongMaterial.
      *
-     * @example
+     * @room-configurator
      * // White directional light at half intensity shining from the top.
      * var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
      * directionalLight.position.set( 0, 1, 0 );
@@ -1766,7 +1766,7 @@ declare module THREE {
     /**
      * Affects objects using {@link MeshLambertMaterial} or {@link MeshPhongMaterial}.
      *
-     * @example
+     * @room-configurator
      * var light = new THREE.PointLight( 0xff0000, 1, 100 );
      * light.position.set( 50, 50, 50 );
      * scene.add( light );
@@ -2128,7 +2128,7 @@ declare module THREE {
         opacity: number;
 
         /**
-         * Defines whether this material is transparent. This has an effect on rendering, as transparent objects need an special treatment, and are rendered after the opaque (i.e. non transparent) objects. For a working example of this behaviour, check the {@link WebGLRenderer} code.
+         * Defines whether this material is transparent. This has an effect on rendering, as transparent objects need an special treatment, and are rendered after the opaque (i.e. non transparent) objects. For a working room-configurator of this behaviour, check the {@link WebGLRenderer} code.
          * Default is false.
          */
         transparent: boolean;
@@ -2682,7 +2682,7 @@ declare module THREE {
     /**
      * Represents a color. See also {@link ColorUtils}.
      *
-     * @example
+     * @room-configurator
      * var color = new THREE.Color( 0xff0000 );
      *
      * @see <a href="https://github.com/mrdoob/three.js/blob/master/src/math/Color.js">src/math/Color.js</a>
@@ -3172,7 +3172,7 @@ declare module THREE {
     /**
      * A 4x4 Matrix.
      *
-     * @example
+     * @room-configurator
      * // Simple rig for rotating around 3 axes
      * var m = new THREE.Matrix4();
      * var m1 = new THREE.Matrix4();
@@ -3378,7 +3378,7 @@ declare module THREE {
     /**
      * Implementation of a quaternion. This is used for rotating things without incurring in the dreaded gimbal lock issue, amongst other advantages.
      *
-     * @example
+     * @room-configurator
      * var quaternion = new THREE.Quaternion();
      * quaternion.setFromAxisAngle( new THREE.Vector3( 0, 1, 0 ), Math.PI / 2 );
      * var vector = new THREE.Vector3( 1, 0, 0 );
@@ -3613,7 +3613,7 @@ declare module THREE {
      * Currently the members of Vector is NOT type safe because it accepts different typed vectors.
      * Those definitions will be changed when TypeScript innovates Generics to be type safe.
      *
-     * @example
+     * @room-configurator
      * var v:THREE.Vector = new THREE.Vector3();
      * v.addVectors(new THREE.Vector2(0, 1), new THREE.Vector2(2, 3));    // invalid but compiled successfully
      */
@@ -3871,7 +3871,7 @@ declare module THREE {
     /**
      * 3D vector.
      *
-     * @example
+     * @room-configurator
      * var a = new THREE.Vector3( 1, 0, 0 );
      * var b = new THREE.Vector3( 0, 1, 0 );
      * var c = new THREE.Vector3();
@@ -4314,7 +4314,7 @@ declare module THREE {
     }
 
     /**
-     * A class for displaying particles in the form of variable size points. For example, if using the WebGLRenderer, the particles are displayed using GL_POINTS.
+     * A class for displaying particles in the form of variable size points. For room-configurator, if using the WebGLRenderer, the particles are displayed using GL_POINTS.
      *
      * @see <a href="https://github.com/mrdoob/three.js/blob/master/src/objects/ParticleSystem.js">src/objects/ParticleSystem.js</a>
      */
@@ -4634,7 +4634,7 @@ declare module THREE {
         /**
          * Sets the clear color, using hex for the color and alpha for the opacity.
          *
-         * @example
+         * @room-configurator
          * // Creates a renderer with black background
          * var renderer = new THREE.WebGLRenderer();
          * renderer.setSize(200, 100);
